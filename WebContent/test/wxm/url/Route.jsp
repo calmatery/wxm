@@ -11,7 +11,6 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<jsp:include page="../../../shared/common.jsp"></jsp:include>
 <script type="text/javascript" src="wxm/url/Fragment.js"></script>
 <script type="text/javascript" src="wxm/url/Route.js"></script>
 <script type="text/javascript" src="test/wxm/url/Route.js"></script>

@@ -11,9 +11,9 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<jsp:include page="../shared/common.jsp"></jsp:include>
-<jsp:include page="../wxm/view/view.jsp"></jsp:include>
-<title>首页</title>
+<jsp:include page="../../../wxm/_wxm.jsp"></jsp:include>
+<script type="text/javascript" src="test/wxm/route/route.js"></script>
+<title>URL验证</title>
 </head>
 <body>
 <div id="qunit"></div>

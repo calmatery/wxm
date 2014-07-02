@@ -1,8 +1,3 @@
-(function(v){
-	var wxm=v.wxm=v.wxm||{};
-	var layout=wxm.layout=wxm.layout||{};
+wxm.layout.AbstractContainer=Spine.Class.create({
 	
-	layout.AbstractContainer=Spine.Class.create({
-		
-	});
-})(window);
+});
