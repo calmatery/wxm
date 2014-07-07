@@ -1,8 +1,9 @@
 wxm.route.Route=Spine.Class.create({
-	init:function(fragments,view,serialNO){
-		this.fragments= fragments;
-		this.view=view;
-		this.serialNO=serialNO;
+	init:function(options){
+		this.fragments= options.fragments;
+		this.containerFactory=options.containerFactory;
+		this.containerInfo=options.containerInfo;
+		this.serialNO=options.serialNO;
 	},
 	getSerialNO:function(){
 		return this.serialNO?this.serialNO:this.serialNO=this.getMaxFragmentsSerialNO();

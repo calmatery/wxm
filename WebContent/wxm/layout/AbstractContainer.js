@@ -1,3 +1,3 @@
-wxm.layout.AbstractContainer=Spine.Class.create({
+wxm.layout.AbstractContainer=Spine.Controller.create({
 	
 });

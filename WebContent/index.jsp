@@ -12,6 +12,7 @@
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="wxm/_wxm.jsp"></jsp:include>
+<jsp:include page="Project/_Project.jsp"></jsp:include>
 <title>首页</title>
 </head>
 <body>

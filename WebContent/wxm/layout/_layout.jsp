@@ -4,3 +4,5 @@
 <script type="text/javascript">
 	wxm.layout={};
 </script>
+<script type="text/javascript" src="wxm/layout/AbstractContainer.js"></script>
+<script type="text/javascript" src="wxm/layout/LayoutManager.js"></script>
