@@ -4,13 +4,25 @@ wxm.route.RouteManager=Spine.Class.create({
 		this.layoutManager=(options&&options.layoutManager)||new wxm.layout.LayoutManager();
 		this.container=null;
 	},
-	hashChangeHandler:function(event){
-		var hash=location.hash.substr(1);
-		var container=this.getContainerInfo(hash);
-		
+	hashChangeHandler:function(){
+		if(!this._hashChangeHandler){
+			var me=this;
+			this._hashChangeHandler=function(event){
+				var hash=location.hash.substr(1);
+				var route=me.matchedRoute(hash);
+				
+			};
+		}
+		return this._hashChangeHandler;
 	},
-	getContainerInfo:function(url){
-		
+	matchedRoute:function(urlPath){
+		var url=new wxm.route.Url(urlPath);
+		for(var i=0;i<this.routes.length;i++){
+			var route=this.routes[i];
+			if(url.matched(route))
+				return route;
+		}
+		return this.routes.length>0?this.routes[0]:null;
 	},
 	addRoute:function(route){
 		this.routes.push(route);
@@ -42,10 +54,9 @@ wxm.route.RouteManager=Spine.Class.create({
 			if(!hasChild){
 				var containerFactories=parentNodeInfo.ancestors.concat(parentNodeInfo.node);
 				var containerInfos={containerFactories:containerFactories,fragments:parentNodeInfo.fragments};
-				
 				var containerInfo={
 							fragments:parentNodeInfo.fragments,
-							containerFactory:wxm.layout.CascadeContainer,
+							containerFactory:wxm.layout.cascade.CascadeContainer,
 							containerInfo:containerInfos
 						};
 				var route=new wxm.route.Route(containerInfo);
@@ -54,6 +65,6 @@ wxm.route.RouteManager=Spine.Class.create({
 		}
 	},
 	startListener:function(){
-		$(window).bind("hashchange",this.hashChangeHandler);
+		$(window).bind("hashchange",this.hashChangeHandler());
 	}
 });

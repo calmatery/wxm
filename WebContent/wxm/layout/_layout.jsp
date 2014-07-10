@@ -5,4 +5,5 @@
 	wxm.layout={};
 </script>
 <script type="text/javascript" src="wxm/layout/AbstractContainer.js"></script>
+<jsp:include page="cascade/_cascade.jsp"></jsp:include>
 <script type="text/javascript" src="wxm/layout/LayoutManager.js"></script>
