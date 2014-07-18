@@ -14,6 +14,14 @@ wxm.route.Url=Spine.Class.create({
 		}
 	},
 	matched:function(route){
-		console.log(route);
+		this.route=route;
+		var url_i=0,route_i=0;
+		for(;url_i<this.fragments.length&&
+			route_i<route.fragments.length;url_i++,route_i++){
+			if(!route.fragments[route_i].match(this.fragments[url_i])){
+				break;
+			}
+		}
+		this.matchedIndex=url_i-1;
 	}
 });

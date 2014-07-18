@@ -10,19 +10,24 @@ wxm.route.RouteManager=Spine.Class.create({
 			this._hashChangeHandler=function(event){
 				var hash=location.hash.substr(1);
 				var route=me.matchedRoute(hash);
-				
+				me.layoutManager.render(route.containerFactory,route.containerInfo);
 			};
 		}
 		return this._hashChangeHandler;
 	},
 	matchedRoute:function(urlPath){
 		var url=new wxm.route.Url(urlPath);
+		var matchedRoutes=[];
 		for(var i=0;i<this.routes.length;i++){
 			var route=this.routes[i];
-			if(url.matched(route))
+			url.matched(route);
+			if(url.fragments.length==url.matchedIndex+1)
 				return route;
+			else if(url.matchedIndex>=0){
+				matchedRoutes[url.matchedIndex]=route;
+			}
 		}
-		return this.routes.length>0?this.routes[0]:null;
+		return (matchedRoutes.length>0&&matchedRoutes[matchedRoutes.length-1])||(this.routes.length>0&&this.routes[0])||null;
 	},
 	addRoute:function(route){
 		this.routes.push(route);
@@ -38,10 +43,11 @@ wxm.route.RouteManager=Spine.Class.create({
 			for(var nodeProp in parentNodeInfo.node){
 				var childNode=parentNodeInfo.node[nodeProp];
 				if(childNode.prototype&&
-						childNode.prototype instanceof wxm.layout.AbstractContainer){
+						childNode.prototype instanceof wxm.layout.cascade.AtomContainer){
 					hasChild=true;
 					var fragments=parentNodeInfo.fragments.slice(0);
-					fragments.push(nodeProp);
+					var fragment=new wxm.route.RouteFragment({fragment:nodeProp});
+					fragments.push(fragment);
 					var ancestors=parentNodeInfo.ancestors.slice(0);
 					if($.inArray(childNode,ancestors)>=0){
 						throw "the childNode has been in ancestors";
@@ -51,9 +57,9 @@ wxm.route.RouteManager=Spine.Class.create({
 					stack.push(childNodeInfo);
 				}
 			}
-			if(!hasChild){
-				var containerFactories=parentNodeInfo.ancestors.concat(parentNodeInfo.node);
-				var containerInfos={containerFactories:containerFactories,fragments:parentNodeInfo.fragments};
+			if(!hasChild&&parentNodeInfo.node!=rootView){
+				var atomContainerFactories=parentNodeInfo.ancestors.concat(parentNodeInfo.node);
+				var containerInfos={atomContainerFactories:atomContainerFactories,fragments:parentNodeInfo.fragments};
 				var containerInfo={
 							fragments:parentNodeInfo.fragments,
 							containerFactory:wxm.layout.cascade.CascadeContainer,

@@ -1,6 +1,12 @@
 wxm.layout.cascade.AtomContainer=Spine.Controller.create({
 	init:function(options){
-		this.parent=options.parent;
-		this.parent&&(this.parent.child=this);
+		this.nextEl=$("<div>");
+	},
+	setPrevious:function(previous){
+		this.previous=previous;
+		this.previous&&(this.previous.next=this);
+	},
+	render:function(){
+		this.el.append(this.nextEl);
 	}
 });

@@ -6,6 +6,7 @@ Project.App=Spine.Class.create({
 		this.routeManager=new wxm.route.RouteManager({layoutManager:this.layoutManager});
 		this.routeManager.addRootContainer(Project);
 		this.routeManager.startListener();
+		location.hash='Module1/Func1'
 	}
 });
 $(document).ready(function(){
