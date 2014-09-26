@@ -47,7 +47,7 @@ wxm.route.RouteManager=Spine.Class.create({
 					hasChild=true;
 					var fragments=parentNodeInfo.fragments.slice(0);
 					var fragment=new wxm.route.RouteFragment({fragment:nodeProp});
-					fragments.push(fragment);
+					nodeProp.slice(0,1)!="_"&&fragments.push(fragment);
 					var ancestors=parentNodeInfo.ancestors.slice(0);
 					if($.inArray(childNode,ancestors)>=0){
 						throw "the childNode has been in ancestors";
