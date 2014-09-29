@@ -1,4 +1,7 @@
 Project.Module1.Func1.Index=wxm.layout.cascade.AtomContainer.create({
+	xEvent:{
+		"testEvent":"testEventHandler"
+	},
 	init:function(){
 		this.el.addClass("module1_func1_Index");
 		var label=$("<label>");
@@ -6,5 +9,8 @@ Project.Module1.Func1.Index=wxm.layout.cascade.AtomContainer.create({
 		this.el.append(label);
 		this.constructor.__super__.init.apply(this,arguments);
 		console.log("construct");
+	},
+	testEventHandler:function(value){
+		alert("testEventHandler:"+value);
 	}
 });

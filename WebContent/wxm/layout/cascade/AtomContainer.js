@@ -1,6 +1,7 @@
-wxm.layout.cascade.AtomContainer=Spine.Controller.create({
+wxm.layout.cascade.AtomContainer=wxm.layout.AbstractContainer.create({
 	init:function(options){
 		this.nextEl=$("<div>");
+		this.routeFragment=options.fragment;
 	},
 	setPrevious:function(previous){
 		this.previous=previous;

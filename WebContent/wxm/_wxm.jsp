@@ -7,8 +7,12 @@
 <script type="text/javascript" src="spine/spine.js"></script>
 
 <script type="text/javascript">
-	window.wxm={};
+	window.X=window.wxm={};
 </script>
 
+<jsp:include page="event/_event.jsp"></jsp:include>
 <jsp:include page="route/_route.jsp"></jsp:include>
 <jsp:include page="layout/_layout.jsp"></jsp:include>
+<script type="text/javascript">
+	X.evtMgr=new X.event.XEventManager();
+</script>

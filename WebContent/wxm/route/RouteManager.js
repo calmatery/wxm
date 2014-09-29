@@ -10,6 +10,9 @@ wxm.route.RouteManager=Spine.Class.create({
 			this._hashChangeHandler=function(event){
 				var hash=location.hash.substr(1);
 				var route=me.matchedRoute(hash);
+				for(var i=route.matchedIndex+1;i<route.fragments.length;i++){
+					route.fragments[i].urlFragment=null;
+				}
 				me.layoutManager.render(route.containerFactory,route.containerInfo);
 			};
 		}
@@ -20,11 +23,11 @@ wxm.route.RouteManager=Spine.Class.create({
 		var matchedRoutes=[];
 		for(var i=0;i<this.routes.length;i++){
 			var route=this.routes[i];
-			url.matched(route);
-			if(url.fragments.length==url.matchedIndex+1)
+			route.matched(url);
+			if(url.fragments.length==route.matchedIndex+1)
 				return route;
-			else if(url.matchedIndex>=0){
-				matchedRoutes[url.matchedIndex]=route;
+			else if(route.matchedIndex>=0){
+				matchedRoutes[route.matchedIndex]=route;
 			}
 		}
 		return (matchedRoutes.length>0&&matchedRoutes[matchedRoutes.length-1])||(this.routes.length>0&&this.routes[0])||null;
@@ -46,8 +49,10 @@ wxm.route.RouteManager=Spine.Class.create({
 						childNode.prototype instanceof wxm.layout.cascade.AtomContainer){
 					hasChild=true;
 					var fragments=parentNodeInfo.fragments.slice(0);
-					var fragment=new wxm.route.RouteFragment({fragment:nodeProp});
-					nodeProp.slice(0,1)!="_"&&fragments.push(fragment);
+					var routeExpression=childNode.prototype.route||nodeProp;
+					var fragment=new wxm.route.RouteFragment({fragment:routeExpression});
+					nodeProp.slice(0,1)=="_"&&(fragment.isForMatch=!1);
+					fragments.push(fragment);
 					var ancestors=parentNodeInfo.ancestors.slice(0);
 					if($.inArray(childNode,ancestors)>=0){
 						throw "the childNode has been in ancestors";

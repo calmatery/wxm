@@ -1,4 +1,4 @@
-wxm.layout.LayoutManager=Spine.Class.create({
+wxm.layout.LayoutManager=wxm.event.AbstractEventMedium.create({
 	init:function(options){
 		this.el=options&&options.el;
 		this.el||this.createEl();
@@ -14,5 +14,8 @@ wxm.layout.LayoutManager=Spine.Class.create({
 			lastContainer:this.lastContainer,
 			el:this.el,lastContainer:this.lastContainer});
 		this.lastContainer=container;
+	},
+	getNextMedium:function(){
+		return this.lastContainer;
 	}
 });
