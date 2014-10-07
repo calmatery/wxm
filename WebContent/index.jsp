@@ -17,6 +17,11 @@
 		padding:5px;
 		border: 1px red solid;
 	}
+	nav{
+		margin: 5px;
+		padding: 5px;
+		border: 1px blue solid;
+	}
 </style>
 <jsp:include page="wxm/_wxm.jsp"></jsp:include>
 <jsp:include page="Project/_Project.jsp"></jsp:include>

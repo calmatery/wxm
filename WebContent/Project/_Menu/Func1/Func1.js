@@ -4,6 +4,5 @@ Project._Menu.Func1=wxm.layout.cascade.AtomContainer.create({
 		var label=$("<label>");
 		label.html("_Menu_func1");
 		this.el.append(label);
-		this.constructor.__super__.init.apply(this,arguments);
 	}
 });

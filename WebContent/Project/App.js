@@ -7,7 +7,7 @@ Project.App=Spine.Class.create({
 		this.routeManager.addRootContainer(Project);
 		X.evtMgr.registerEventMedium(this.layoutManager);
 		this.routeManager.startListener();
-		location.hash==''?location.hash='Module1/Func1':this.routeManager._hashChangeHandler();
+		this.routeManager._hashChangeHandler();
 	}
 });
 $(document).ready(function(){

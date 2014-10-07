@@ -1,13 +1,11 @@
 wxm.layout.cascade.AtomContainer=wxm.layout.AbstractContainer.create({
-	init:function(options){
-		this.nextEl=$("<div>");
-		this.routeFragment=options.fragment;
-	},
-	setPrevious:function(previous){
-		this.previous=previous;
-		this.previous&&(this.previous.next=this);
-	},
+	serialNO:0,
 	render:function(){
 		this.el.append(this.nextEl);
+		this.setNextElProp();
+	},
+	setNextElProp:function(){
+		//this.nextEl&&this.nextEl.css({width:'100px'});
+		//设置下一个元素的属性
 	}
 });

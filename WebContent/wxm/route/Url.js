@@ -6,8 +6,8 @@ wxm.route.Url=Spine.Class.create({
 				url.indexOf("\\")<0&&
 				url.indexOf("//")<0)
 		{
-			this.fragments=url.split("/");
-			this.fragments[0]==""&&this.fragments.shift();
+			this.urlFragments=url.split("/");
+			this.urlFragments[0]==""&&this.urlFragments.shift();
 		}
 		else{
 			throw("输入的url异常:"+url);

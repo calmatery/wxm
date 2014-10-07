@@ -4,7 +4,11 @@
 	Project={};
 </script>
 <script type="text/javascript" src="Project/Index.js"></script>
+<script type="text/javascript" src="Project/asdff.js"></script>
 <jsp:include page="Module1/_Module1.jsp"></jsp:include>
 <jsp:include page="Module2/_Module2.jsp"></jsp:include>
 <jsp:include page="_Menu/_Menu.jsp"></jsp:include>
+<script type="text/javascript">
+	Project.Module3=Project.Module1;
+</script>
 <script type="text/javascript" src="Project/App.js"></script>

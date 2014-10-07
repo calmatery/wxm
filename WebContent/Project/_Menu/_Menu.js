@@ -4,7 +4,5 @@ Project._Menu=wxm.layout.cascade.AtomContainer.create({
 		var label=$("<label>");
 		label.html("_Menu");
 		this.el.append(label);
-		
-		this.constructor.__super__.init.apply(this,arguments);
 	}
 });

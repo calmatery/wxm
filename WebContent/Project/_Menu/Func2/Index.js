@@ -1,5 +1,5 @@
 Project._Menu.Func2.Index=wxm.layout.cascade.AtomContainer.create({
-	init:function(){
+	init:function(options){
 		this.el.addClass("_Menu_func2_Index");
 		var label=$("<label>");
 		label.html("_Menu_func2_Index");

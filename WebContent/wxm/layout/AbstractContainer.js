@@ -4,5 +4,10 @@ wxm.layout.AbstractContainer=wxm.event.AbstractEventMedium.create({
 	},
 	getNextMedium:function(){
 		return null;
+	},
+	remove:function(){
+		this.el.slideUp('slow',function(){
+			this.remove();
+		});
 	}
 });

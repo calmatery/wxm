@@ -10,7 +10,7 @@ wxm.layout.LayoutManager=wxm.event.AbstractEventMedium.create({
 	},
 	render:function(containerFactory,containerInfo){
 		var container=new containerFactory({atomContainerFactories:containerInfo.atomContainerFactories,
-			fragments:containerInfo.fragments,
+			routeFragments:containerInfo.routeFragments,
 			lastContainer:this.lastContainer,
 			el:this.el,lastContainer:this.lastContainer});
 		this.lastContainer=container;

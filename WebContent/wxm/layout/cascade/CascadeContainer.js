@@ -1,38 +1,76 @@
 wxm.layout.cascade.CascadeContainer=wxm.layout.AbstractContainer.create({
 	init:function(options){
-		this.atomContainerFactories=options.atomContainerFactories;
-		this.fragments=options.fragments;
-		this.lastContainer=options.lastContainer;
-		this.renderTo(this.el);
+		this.render();
 	},
 	getNextMedium:function(){
 		return this.atomContainers;
 	},
-	renderTo:function(el){
-		var atomContainers=this.atomContainers=[],i=0,last=null;
+	checkForCommon:function(){
+		this.difIdx=0;
+		var atomContainers=this.atomContainers=[];
 		if(this.lastContainer instanceof wxm.layout.cascade.CascadeContainer){
-			for(;i<this.lastContainer.atomContainers.length&&i<this.atomContainerFactories.length;i++){
-				var atomContainer=this.lastContainer.atomContainers[i];
-				if(atomContainer instanceof this.atomContainerFactories[i])
-					atomContainers[i]=atomContainer;
+			for(;this.difIdx<this.lastContainer.atomContainers.length&&
+				this.difIdx<this.atomContainerFactories.length;this.difIdx++){
+				var atomContainer=this.lastContainer.atomContainers[this.difIdx];
+				if(atomContainer instanceof this.atomContainerFactories[this.difIdx])
+					atomContainers[this.difIdx]=atomContainer;
 				else
 					break;
 			}
-			i>0&&(last=atomContainers[i-1]);
 		}
-		if(i==this.atomContainerFactories.length)
-			return;
-		var lastClassName=this.lastContainer&&this.lastContainer.atomContainerFactories[i].prototype.className;
-		last?(last.nextEl&&last.nextEl.empty().removeClass(lastClassName)):el.empty().removeClass(lastClassName);
-
-		for(;i<this.atomContainerFactories.length;i++){
-			var atomContainerFactory=this.atomContainerFactories[i];
-			var atomContainer;
-			last?atomContainer=new atomContainerFactory({el:last.nextEl,previous:last,fragment:this.fragments[i]}):
-				atomContainer=new atomContainerFactory({el:this.el,fragment:this.fragments[i]});
+	},
+	initDifAtomContainer:function(){
+		var atomElTag=this.atomContainerFactories[this.difIdx].prototype.tag;
+		this.atomEl=$('<'+atomElTag+'>');
+		if(this.lastContainer){
+			this.lastDifAtom=this.lastContainer.atomContainers[this.difIdx];
+			this.lastDifAtom.el.after(this.atomEl);
+		}
+		this.difIdx==0?(this.nextEl=this.atomEl,this.el.append(this.nextEl)):
+			(this.atomContainers[this.difIdx-1].nextEl=this.atomEl,
+					this.atomContainers[this.difIdx-1].setNextElProp());
+		var atomNextElTag=this.atomContainerFactories[this.difIdx+1]&&
+			this.atomContainerFactories[this.difIdx+1].prototype.tag;
+		var atomNextEl=atomNextElTag&&$('<'+atomNextElTag+'>');
+		var ctorOptions={
+				routeFragment:this.routeFragments[this.difIdx],
+				previous:this.atomContainers[this.difIdx-1],
+				el:this.atomEl,
+				nextEl:atomNextEl
+			};
+		var atomContainerFactory=this.atomContainerFactories[this.difIdx];
+		atomContainer=new atomContainerFactory(ctorOptions);
+		atomContainer.render();
+		this.atomContainers[this.difIdx]=atomContainer;
+		this.difIdx++;
+	},
+	createAtomContainer:function(){
+		var difIdx=this.difIdx;
+		for(;this.difIdx<this.atomContainerFactories.length;this.difIdx++){
+			var atomNextElTag=this.atomContainerFactories[this.difIdx+1]&&
+				this.atomContainerFactories[this.difIdx+1].prototype.tag;
+			var atomNextEl=atomNextElTag&&$('<'+atomNextElTag+'>');
+			var ctorOptions={
+					routeFragment:this.routeFragments[this.difIdx],
+					previous:this.atomContainers[this.difIdx-1],
+					el:this.atomContainers[this.difIdx-1].nextEl,
+					nextEl:atomNextEl
+				};
+			var atomContainerFactory=this.atomContainerFactories[this.difIdx];
+			atomContainer=new atomContainerFactory(ctorOptions);
 			atomContainer.render();
-			atomContainers[i]=atomContainer;
-			last=atomContainer;
+			this.atomContainers[this.difIdx]=atomContainer;
 		}
+		for(var i=difIdx||1;i<this.atomContainers.length;i++){
+			this.atomContainers[i-1].next=this.atomContainers[i];
+		}
+	},
+	render:function(){
+		this.checkForCommon();
+		if(this.difIdx==this.atomContainerFactories.length)
+			return;
+		this.initDifAtomContainer();
+		this.createAtomContainer();
+		this.lastDifAtom&&this.lastDifAtom.remove&&this.lastDifAtom.remove();
 	}
 });
