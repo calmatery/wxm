@@ -7,3 +7,5 @@ Project.Module1.Func2=wxm.layout.cascade.AtomContainer.create({
 		this.el.append(label);
 	}
 });
+
+Project.Module1.Func3=Project.Module1.Func2;
