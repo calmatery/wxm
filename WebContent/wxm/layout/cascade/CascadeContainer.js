@@ -12,8 +12,13 @@ wxm.layout.cascade.CascadeContainer=wxm.layout.AbstractContainer.create({
 			for(;this.difIdx<this.lastContainer.atomContainers.length&&
 				this.difIdx<this.atomContainerFactories.length;this.difIdx++){
 				var atomContainer=this.lastContainer.atomContainers[this.difIdx];
-				if(atomContainer instanceof this.atomContainerFactories[this.difIdx])
+				if(atomContainer instanceof this.atomContainerFactories[this.difIdx]){
 					atomContainers[this.difIdx]=atomContainer;
+					if(atomContainer.routeFragment.urlFragment!=this.lastContainer.atomContainers[this.difIdx].urlFragment){
+						atomContainer.urlFragment=atomContainer.routeFragment.urlFragment;
+						X.evtMgr.triggerEvtMedium(atomContainer,"urlChange",this.routeFragments[this.difIdx].urlFragment);
+					}
+				}
 				else
 					break;
 			}
@@ -34,6 +39,7 @@ wxm.layout.cascade.CascadeContainer=wxm.layout.AbstractContainer.create({
 		var atomNextEl=atomNextElTag&&$('<'+atomNextElTag+'>');
 		var ctorOptions={
 				routeFragment:this.routeFragments[this.difIdx],
+				urlFragment:this.routeFragments[this.difIdx].urlFragment,
 				previous:this.atomContainers[this.difIdx-1],
 				el:this.atomEl,
 				nextEl:atomNextEl
@@ -52,6 +58,7 @@ wxm.layout.cascade.CascadeContainer=wxm.layout.AbstractContainer.create({
 			var atomNextEl=atomNextElTag&&$('<'+atomNextElTag+'>');
 			var ctorOptions={
 					routeFragment:this.routeFragments[this.difIdx],
+					urlFragment:this.routeFragments[this.difIdx].urlFragment,
 					previous:this.atomContainers[this.difIdx-1],
 					el:this.atomContainers[this.difIdx-1].nextEl,
 					nextEl:atomNextEl

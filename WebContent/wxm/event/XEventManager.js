@@ -5,6 +5,13 @@ wxm.event.XEventManager=Spine.Controller.create({
 	registerEventMedium:function(evtMedium){
 		this.evtMediums.push(evtMedium);
 	},
+	
+	triggerEvtMedium:function(evtMedium,eventName){
+		var args=[];
+		for(var i=2;i<arguments.length;i++)
+			args.push(arguments[i]);
+		this._execute(evtMedium,eventName,args);
+	},
 	trigger:function(eventName){
 		var evtMediums=[];
 		for(var i=0;i<this.evtMediums.length;i++){
